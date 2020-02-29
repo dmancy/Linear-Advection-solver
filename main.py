@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from Triangle_Shaped import Triangle_Shaped
+from Smooth_Shaped import Smooth_Shaped
 from Grid import Grid
 from CIR import CIR_scheme
 from Lax_Wendroff import Lax_Wendroff_scheme
@@ -8,13 +9,17 @@ from Lax_Wendroff import Lax_Wendroff_scheme
 
 
 #Grid generation
-faces = np.linspace(-10, 300, 100)
+faces = np.linspace(-10, 300, 311*2)
+print(310/(311*2))
 
 grid = Grid(faces)
 
 
 #Triangle-shaped signal
 U = Triangle_Shaped(grid.cell_position, 0, 20) 
+
+#Smooth signal
+U = Smooth_Shaped(grid.cell_position, 0, 20)
 
 plt.plot(grid.cell_position,U)
 
@@ -30,6 +35,8 @@ plt.plot(grid.cell_position, U_final, "+")
 
 U_final = Lax_Wendroff_scheme(U_origin, grid, 1, a, 0, 100)
 plt.plot(grid.cell_position, U_final)
+
+plt.grid()
 
 
 plt.show()
