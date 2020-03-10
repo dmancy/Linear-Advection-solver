@@ -7,18 +7,21 @@ def CIR_scheme(U_init, Grid, Courant_number, advection_coefficient, t0, t_final)
 
     t = t0
 
-    max_delta_x = 0
+    min_delta_x = Grid.cell_length[0]
     for delta_x in Grid.cell_length:
-        if delta_x > max_delta_x:
-            max_delta_x = delta_x
+        if delta_x < min_delta_x:
+            min_delta_x = delta_x
 
-    delta_t = Courant_number * max_delta_x/ advection_coefficient
+    delta_t = Courant_number * min_delta_x/ advection_coefficient
 
     while t <= t_final:
 
         for i, cell in enumerate(Grid.cell_position):
             #CIR scheme
-            U_new[i] = U[i] - delta_t * advection_coefficient / Grid.cell_length[i] * (U[i] - U[i-1])
+            if i == 0:
+                U_new[i] = U[i] - delta_t * advection_coefficient / Grid.cell_length[i] * (U[i] - U[i])
+            else :
+                U_new[i] = U[i] - delta_t * advection_coefficient / Grid.cell_length[i] * (U[i] - U[i-1])
 
         for i in range(len(U)):
             U[i] = U_new[i]
