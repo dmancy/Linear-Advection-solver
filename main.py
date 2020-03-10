@@ -9,6 +9,13 @@ from Grid import Grid
 from CIR import CIR_scheme
 from Lax_Wendroff import Lax_Wendroff_scheme
 
+def norm_2(U):
+    n = len(U)
+    norm = 0.0
+    for i in range(n):
+        norm += U[i]**2
+
+    return (norm/n)**.5
 
 
 #Grid generation
@@ -171,22 +178,38 @@ ax4 = plt.subplot2grid((2,6), (1,1), colspan=2)
 ax5 = plt.subplot2grid((2,6), (1,3), colspan=2)
 
 ax_list = [ax1, ax2, ax3, ax4, ax5]
+
+norm_list = []
+
 for i in range(5):
     U_origin = Triangle_Shaped(grid_list[i].cell_position, 0, 20, t_0, a) 
     U_exact = Triangle_Shaped(grid_list[i].cell_position, 0 , 20, t_final, a)
     U_final, five_steps = CIR_scheme(U_origin, grid_list[i], .9, a, t_0, t_final)
+
+    norm_list.append(np.log(norm_2(U_final)))
 
     ax_list[i].plot(grid_list[i].cell_position, U_exact, "-")
     ax_list[i].plot(grid_list[i].cell_position, U_final, '+')
     ax_list[i].grid()
     ax_list[i].set_xlabel("Location")
     ax_list[i].set_ylabel(r"$u(x,100)$")
-    #ax_list[i].set_ylim(0.426125, 2.0513749999999997)
     ax_list[i].set_xlim(190,230)
     ax_list[i].set_xlim(190,230)
     ax_list[i].title.set_text(r"$\Delta x = {0:.3g}$".format(grid_list[i].cell_length[0]))
 
 fig.tight_layout()
 
+
+#Global order of convergence
+log_delta_x = [np.log(grid_list[i].cell_length[0]) for i in range(5)]
+
+plt.figure()
+
+plt.plot(log_delta_x, norm_list, "-+")
+
+
+
+
 plt.show()
+
 
