@@ -14,8 +14,11 @@ def CIR_scheme(U_init, Grid, Courant_number, advection_coefficient, t0, t_final)
 
     delta_t = Courant_number * min_delta_x/ advection_coefficient
 
-    while t <= t_final:
+    step = 0
+    five_first_steps = [[0] * len(U) for i in range(5)]
+    five_first_steps += [[0] * 5]
 
+    while t <= t_final:
         for i, cell in enumerate(Grid.cell_position):
             #CIR scheme
             if i == 0:
@@ -25,14 +28,20 @@ def CIR_scheme(U_init, Grid, Courant_number, advection_coefficient, t0, t_final)
 
         for i in range(len(U)):
             U[i] = U_new[i]
+            if step < 5:
+                five_first_steps[step][i] = U_new[i] 
+
+        t += delta_t
+        if step < 5:
+            five_first_steps[5][step] = t
+
+        step+=1
 
         if (t == t_final):
             break
-
-        t += delta_t
 
         if ( t > t_final):
             delta_t -= t + delta_t - t_final
 
 
-    return U
+    return U, five_first_steps
