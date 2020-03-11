@@ -8,6 +8,7 @@ from Smooth_Shaped import Smooth_Shaped
 from Grid import Grid
 from CIR import CIR_scheme
 from Lax_Wendroff import Lax_Wendroff_scheme
+from Lax_Friedrichs import Lax_Friedrichs_scheme
 
 def norm_2(U):
     n = len(U)
@@ -55,7 +56,7 @@ U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.figure()
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.plot(grid.cell_position, U_exact, "-")
-U_final, five_steps = CIR_scheme(U_origin, grid, .8, a, t_0, t_final)
+U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid, .8, a, t_0, t_final)
 plt.plot(grid.cell_position, U_final, "+")
 
 plt.grid()
@@ -82,17 +83,17 @@ for i in range(5):
     ax_list[i].set_xlabel("Location")
     ax_list[i].set_ylabel(r"$u(x,{})$".format(five_steps[5][i]))
     ax_list[i].set_xlim(-2.5,35)
-    ax_list[i].set_ylim(0.426125, 2.0513749999999997)
+    ax_list[i].set_ylim(0.426125, 2.08)
 
 fig.suptitle(r"Five first time steps for $C = 0.8$.") 
 
-fig.tight_layout()
+fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 
 #for C = 1.2
 plt.figure()
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.plot(grid.cell_position, U_exact, "-")
-U_final, five_steps = CIR_scheme(U_origin, grid, 1.02, a, t_0, t_final)
+U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid, 1.02, a, t_0, t_final)
 plt.plot(grid.cell_position, U_final, "+")
 
 plt.grid()
@@ -118,18 +119,18 @@ for i in range(5):
     ax_list[i].set_xlabel("Location")
     ax_list[i].set_ylabel(r"$u(x,{})$".format(five_steps[5][i]))
     ax_list[i].set_xlim(-2.5,35)
-    ax_list[i].set_ylim(0.426125, 2.0513749999999997)
+    ax_list[i].set_ylim(0.426125, 2.08)
 
 fig.suptitle(r"Five first time steps for $C = 1.02$.") 
 
-fig.tight_layout()
+fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 
 
 #for C = 2.0
 plt.figure()
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.plot(grid.cell_position, U_exact, "-")
-U_final, five_steps = CIR_scheme(U_origin, grid, 2.0, a, t_0, t_final)
+U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid, 2.0, a, t_0, t_final)
 plt.plot(grid.cell_position, U_final, "+")
 
 plt.grid()
@@ -155,12 +156,12 @@ for i in range(5):
     ax_list[i].set_xlabel("Location")
     ax_list[i].set_ylabel(r"$u(x,{})$".format(five_steps[5][i]))
     ax_list[i].set_xlim(-2.5,35)
-    ax_list[i].set_ylim(0.426125, 2.0513749999999997)
+    ax_list[i].set_ylim(0.426125, 2.08)
 
 fig.suptitle(r"Five first time steps for $C = 2.0$.") 
-fig.tight_layout()
+fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 
-#U_final = Lax_Wendroff_scheme(U_origin, grid, 1, a, 0, 100)
+#U_final = Lax_Friedrichs_scheme(U_origin, grid, 1, a, 0, 100)
 #plt.plot(grid.cell_position, U_final)
 
 
@@ -184,7 +185,7 @@ norm_list = []
 for i in range(5):
     U_origin = Triangle_Shaped(grid_list[i].cell_position, 0, 20, t_0, a) 
     U_exact = Triangle_Shaped(grid_list[i].cell_position, 0 , 20, t_final, a)
-    U_final, five_steps = CIR_scheme(U_origin, grid_list[i], .9, a, t_0, t_final)
+    U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid_list[i], .9, a, t_0, t_final)
 
     norm_list.append(np.log(norm_2(U_final)))
 
@@ -197,7 +198,7 @@ for i in range(5):
     ax_list[i].set_xlim(190,230)
     ax_list[i].title.set_text(r"$\Delta x = {0:.3g}$".format(grid_list[i].cell_length[0]))
 
-fig.tight_layout()
+fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 
 
 #Global order of convergence
