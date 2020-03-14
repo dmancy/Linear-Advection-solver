@@ -20,9 +20,8 @@ def norm_2(U):
 
 
 #Grid generation
-faces = np.linspace(-21, 260, 282)
+faces = np.linspace(-10, 260, 676)
 grid = Grid(faces)
-
 a = 2
 Courant_number = 2
 t_0 = 0
@@ -65,7 +64,6 @@ plt.ylabel(r"$u(x,100)$")
 plt.legend(["Exact solution", "CIR scheme"])
 plt.title(r"Solution of the linear advection equation for $C = 0.8$.") 
 
-
 #first 5 iterations 
 fig = plt.figure(figsize = (9,5.5))
 ax1 = plt.subplot2grid(shape=(2,6), loc=(0,0), colspan=2)
@@ -81,7 +79,7 @@ for i in range(5):
     ax_list[i].plot(grid.cell_position, five_steps[i], '+')
     ax_list[i].grid()
     ax_list[i].set_xlabel("Location")
-    ax_list[i].set_ylabel(r"$u(x,{})$".format(five_steps[5][i]))
+    ax_list[i].set_ylabel(r"$u(x,{:.3})$".format(five_steps[5][i]))
     ax_list[i].set_xlim(-2.5,35)
     ax_list[i].set_ylim(0.426125, 2.08)
 
