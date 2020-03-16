@@ -18,7 +18,11 @@ def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0,
     five_first_steps = [[0] * len(U) for i in range(5)]
     five_first_steps += [[0] * 5]
 
-    while t <= t_final:
+    while t < t_final:
+
+        t += delta_t
+        if ( t > t_final):
+            delta_t -= t - t_final
 
         for i, cell in enumerate(Grid.cell_position):
             #Lax-Wendroff scheme
@@ -35,18 +39,11 @@ def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0,
             if step < 5:
                 five_first_steps[step][i] = U_new[i] 
 
-        t += delta_t
         if step < 5:
             five_first_steps[5][step] = t
 
         step+=1
 
-        if (t == t_final):
-            break
-
-
-        if ( t > t_final):
-            delta_t -= t + delta_t - t_final
 
 
     return U, five_first_steps

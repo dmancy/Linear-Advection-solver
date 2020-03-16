@@ -55,7 +55,7 @@ U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.figure()
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.plot(grid.cell_position, U_exact, "-")
-U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid, .8, a, t_0, t_final)
+U_final, five_steps = CIR_scheme(U_origin, grid, .8, a, t_0, t_final)
 plt.plot(grid.cell_position, U_final, "+")
 
 plt.grid()
@@ -63,6 +63,8 @@ plt.xlabel("Location")
 plt.ylabel(r"$u(x,100)$")
 plt.legend(["Exact solution", "CIR scheme"])
 plt.title(r"Solution of the linear advection equation for $C = 0.8$.") 
+
+plt.show()
 
 #first 5 iterations 
 fig = plt.figure(figsize = (9,5.5))
@@ -91,7 +93,7 @@ fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.figure()
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.plot(grid.cell_position, U_exact, "-")
-U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid, 1.02, a, t_0, t_final)
+U_final, five_steps = CIR_scheme(U_origin, grid, 1.02, a, t_0, t_final)
 plt.plot(grid.cell_position, U_final, "+")
 
 plt.grid()
@@ -128,7 +130,7 @@ fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.figure()
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.plot(grid.cell_position, U_exact, "-")
-U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid, 2.0, a, t_0, t_final)
+U_final, five_steps = CIR_scheme(U_origin, grid, 2.0, a, t_0, t_final)
 plt.plot(grid.cell_position, U_final, "+")
 
 plt.grid()
@@ -159,7 +161,7 @@ for i in range(5):
 fig.suptitle(r"Five first time steps for $C = 2.0$.") 
 fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 
-#U_final = Lax_Friedrichs_scheme(U_origin, grid, 1, a, 0, 100)
+#U_final = CIR_scheme(U_origin, grid, 1, a, 0, 100)
 #plt.plot(grid.cell_position, U_final)
 
 
@@ -183,7 +185,7 @@ norm_list = []
 for i in range(5):
     U_origin = Triangle_Shaped(grid_list[i].cell_position, 0, 20, t_0, a) 
     U_exact = Triangle_Shaped(grid_list[i].cell_position, 0 , 20, t_final, a)
-    U_final, five_steps = Lax_Friedrichs_scheme(U_origin, grid_list[i], .9, a, t_0, t_final)
+    U_final, five_steps = CIR_scheme(U_origin, grid_list[i], .9, a, t_0, t_final)
 
     norm_list.append(np.log(norm_2(U_final)))
 
