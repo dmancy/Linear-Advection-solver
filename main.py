@@ -23,7 +23,7 @@ def norm_2(U):
 faces = np.linspace(-10, 260, 676)
 grid = Grid(faces)
 a = 2
-Courant_number = 2
+Courant_number = 1
 t_0 = 0
 t_final = 100
 
@@ -33,7 +33,7 @@ U = Triangle_Shaped(grid.cell_position, 0, 20, t_0, a)
 #Smooth signal
 #U = Smooth_Shaped(grid.cell_position, 0, 20)
 
-#plt.plot(grid.cell_position,U)
+
 
 U_origin = U
 
@@ -44,10 +44,6 @@ U_origin = U
 
 #Exact solution
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
-#plt.plot(grid.cell_position, U_exact, "-")
-
-#U_final = CIR_scheme(U_origin, grid, Courant_number, a, t_0, t_final)
-#plt.plot(grid.cell_position, U_final, "+")
 
 #Stability limit
 
@@ -55,7 +51,7 @@ U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.figure()
 U_exact = Triangle_Shaped(grid.cell_position, 0 , 20, 100, a)
 plt.plot(grid.cell_position, U_exact, "-")
-U_final, five_steps = CIR_scheme(U_origin, grid, .8, a, t_0, t_final)
+U_final, five_steps = CIR_scheme(U_origin, grid, .8, a, t_0, 100)
 plt.plot(grid.cell_position, U_final, "+")
 
 plt.grid()
@@ -101,6 +97,7 @@ plt.xlabel("Location")
 plt.ylabel(r"$u(x,100)$")
 plt.legend(["Exact solution", "CIR scheme"])
 plt.title(r"Solution of the linear advection equation for $C = 1.02$.") 
+plt.show()
 
 #first 5 iterations 
 fig = plt.figure(figsize = (9,5.5))
