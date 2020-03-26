@@ -2,7 +2,11 @@ import numpy as np
 
 def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0, t_final):
 
-    U = np.copy(U_init)
+    #Copy of U_init
+    U = np.zeros(len(U_init))
+    for i in range(len(U)):
+        U[i] = U_init[i]
+
     U_new = np.zeros(len(U_init))
 
     t = t0

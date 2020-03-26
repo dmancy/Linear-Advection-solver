@@ -6,7 +6,9 @@ def Lax_Friedrichs_flux(u_1, u_2, a, delta_x, delta_t):
 
 def Lax_Friedrichs_scheme(U_init, Grid, Courant_number, advection_coefficient, t0, t_final):
 
+    #Copy of U_init
     U = np.copy(U_init)
+
     U_new = np.zeros(len(U_init))
 
     t = t0

@@ -1,6 +1,9 @@
 import numpy as np
 
-def CIR_scheme(U, Grid, Courant_number, advection_coefficient, t0, t_final):
+def CIR_scheme(U_init, Grid, Courant_number, advection_coefficient, t0, t_final):
+
+    #Copy of U_init
+    U = np.copy(U_init)
 
     U_new = np.zeros(len(U))
 
@@ -22,6 +25,7 @@ def CIR_scheme(U, Grid, Courant_number, advection_coefficient, t0, t_final):
         t += delta_t
         if ( t > t_final):
             delta_t -= t - t_final
+            break
 
         for i, cell in enumerate(Grid.cell_position):
             #CIR scheme
@@ -35,13 +39,9 @@ def CIR_scheme(U, Grid, Courant_number, advection_coefficient, t0, t_final):
             if step < 5:
                 five_first_steps[step][i] = U_new[i] 
 
-        t += delta_t
         if step < 5:
             five_first_steps[5][step] = t
 
         step+=1
-
-
-
 
     return U, five_first_steps
