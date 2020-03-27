@@ -1,5 +1,7 @@
 import numpy as np
 
+#Lax-Wendroff scheme implementation
+
 def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0, t_final):
 
     #Copy of U_init
@@ -11,6 +13,7 @@ def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0,
 
     t = t0
 
+    #Computation of the time step
     max_delta_x = 0
     for delta_x in Grid.cell_length:
         if delta_x > max_delta_x:
@@ -24,6 +27,7 @@ def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0,
 
     while t < t_final:
 
+        #Time step adjustement
         t += delta_t
         if ( t > t_final):
             delta_t -= t - t_final
@@ -38,6 +42,7 @@ def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0,
                 U_new[i] = U[i] - delta_t * advection_coefficient / (2 * Grid.cell_length[i]) * (U[(i)] - U[i])  + (delta_t * advection_coefficient /  Grid.cell_length[i])**2  / 2 * (U[i] - 2*U[i] + U[i]) 
 
 
+        #Save five first steps
         for i in range(len(U)):
             U[i] = U_new[i]
             if step < 5:
@@ -47,7 +52,5 @@ def Lax_Wendroff_scheme(U_init, Grid, Courant_number, advection_coefficient, t0,
             five_first_steps[5][step] = t
 
         step+=1
-
-
 
     return U, five_first_steps

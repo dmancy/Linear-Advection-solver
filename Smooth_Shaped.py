@@ -1,5 +1,6 @@
 import numpy as np
 
+#Generation of a smooth signal
 def Smooth_Shaped(X, x1, x2, t, a):
     U = [0] * len(X)
     for i, x in enumerate(X):

@@ -8,7 +8,6 @@ from Smooth_Shaped import Smooth_Shaped
 from Grid import Grid
 from CIR import CIR_scheme
 from Lax_Wendroff import Lax_Wendroff_scheme
-from Lax_Friedrichs import Lax_Friedrichs_scheme
 from norm_2 import norm_2
 
 
@@ -16,11 +15,8 @@ from norm_2 import norm_2
 #Definition of the faces
 faces = np.linspace(-10, 260, 676)
 
-
 #Grid generation
 grid = Grid(faces)
-
-
 
 #Advection coefficient
 a = 2
@@ -32,7 +28,9 @@ Courant_number = 1
 t_0 = 0
 t_final = 100
 
-#Initial conditions
+####################
+#Initial conditions#
+####################
 #Triangle-shaped signal
 U_triangle_init = Triangle_Shaped(grid.cell_position, 0, 20, t_0, a) 
 
@@ -96,8 +94,10 @@ fig.tight_layout(rect=[0, 0.03, 1, 0.95])
 ############
 #For C = 1.2
 plt.figure()
+
 U_final, five_steps = CIR_scheme(U_triangle_init, grid, 1.02, a, t_0, t_final)
 
+#plot
 plt.grid()
 plt.plot(grid.cell_position, U_triangle_exact, "-")
 plt.plot(grid.cell_position, U_final, "+")
